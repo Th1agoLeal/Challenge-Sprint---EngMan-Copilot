@@ -6,9 +6,9 @@ Challenge Sprint FIAP × Motiva Rodovias · Ciência da Computação · Sprint 0
 | Nome completo | RM | Frente |
 | --- | --- | --- |
 | Thiago Nascimento de Sá | 575074 | Planejamento e documentação |
-| [Pessoa 2] | [RM] | Prompt e avaliação |
-| [Pessoa 3] | [RM] | Base de conhecimento e ferramentas |
-| [Pessoa 4] | [RM] | Arquitetura, stack e segurança |
+| Lucca Vitor Fustinoni Camargo| 575383 | Prompt e avaliação |
+| Erick Vieiro Martins | 575683 | Base de conhecimento e ferramentas |
+| Miguel Souza Nunes | 576617 | Arquitetura, stack e segurança |
 
 Turma: 1CCPS
 
