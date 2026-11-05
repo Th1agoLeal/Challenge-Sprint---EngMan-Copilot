@@ -20,8 +20,8 @@ Recorte B — Operação e Priorização de Campo.
 
 ## Persona e ativos
 - Persona principal: operador do CCO (secundário: coordenador de manutenção).
-- Ativos considerados: [câmeras CFTV, PMV, telefones SOS, estações meteorológicas].
-- Todos os dados de ativos, histórico e procedimentos são **simulados**, salvo indicação em contrário.
+- Ativos considerados: [câmeras CFTV, sensores de tráfego, telefones SOS, estações meteorológicas].
+- Todos os dados de ativos, histórico e procedimentos são simulados, salvo indicação em contrário.
 
 ## Escopo da Sprint 01
 Documentação e planejamento. Não há código nem protótipo funcional nesta sprint.
