@@ -101,22 +101,36 @@ Fluxo em 8 blocos, do alarme à resposta:
 
 ## 6. Stack e justificativa técnica
 
-Comparação completa em [`docs/decisoes_tecnicas.md`](docs/decisoes_tecnicas.md) *(em breve, entrega da Pessoa 4)*.
+Comparação completa em [`docs/decisoes_tecnicas.md`](docs/decisoes_tecnicas.md).
 
-**Caminho gratuito:** a solução precisa rodar com custo zero. Um modelo pago pode ser opção, mas o caminho gratuito fica documentado aqui.
+**Caminho gratuito (custo zero):** Qwen 2.5 7B Instruct via Ollama local + ChromaDB local + Sentence Transformers local. Nenhuma etapa depende de API paga ou de chave.
 
-| Critério | Modelo 1 | Modelo 2 | Vector store 1 | Vector store 2 |
-| --- | --- | --- | --- | --- |
-| Opção | [a preencher] | [a preencher] | [a preencher] | [a preencher] |
-| Custo de uso | | | | |
-| Licença / termos | | | | |
-| Qualidade em pt-BR | | | n/a | n/a |
-| Janela de contexto | | | n/a | n/a |
-| Privacidade (roda local?) | | | | |
-| Integração com Python | | | | |
-| Maturidade / documentação | | | | |
+**Modelos (LLM)**
 
-**Escolha e trade-off aceito:** [a preencher].
+| Critério | Llama 3.1 8B | Qwen 2.5 7B Instruct |
+| --- | --- | --- |
+| Custo de uso | Gratuito (Ollama local) | Gratuito (Ollama local) |
+| Licença | Llama Community License | Apache 2.0 |
+| Qualidade em pt-BR | Português oficialmente suportado | Suportado, ainda não testado |
+| Janela de contexto | Até 128K tokens (declarado) | Até 128K tokens (declarado) |
+| Privacidade | Roda localmente | Roda localmente |
+| Integração com Python | Biblioteca `ollama` | Biblioteca `ollama` |
+| Maturidade | Ecossistema consolidado | Boa documentação |
+
+**Vector stores**
+
+| Critério | ChromaDB | FAISS |
+| --- | --- | --- |
+| Custo | Gratuito | Gratuito |
+| Licença | Apache 2.0 | MIT |
+| Privacidade | Roda localmente | Roda localmente |
+| Integração com Python | Sim | Wrappers Python/NumPy |
+| Maturidade | Boa documentação | Consolidado (Meta) |
+| Metadados | Filtros integrados | Exigem implementação extra |
+
+**Escolha:** Qwen 2.5 7B Instruct + ChromaDB.
+
+**Trade-off aceito:** priorizamos licença permissiva, privacidade local e filtros por metadados integrados. Aceitamos que a qualidade em pt-BR do Qwen ainda não foi validada (plano B: Llama 3.1 8B) e abrimos mão do controle fino do FAISS, que não pesa numa base pequena e simulada.
 
 ---
 
