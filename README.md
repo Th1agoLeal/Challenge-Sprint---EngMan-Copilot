@@ -19,13 +19,19 @@ Challenge Sprint FIAP × Motiva Rodovias · Ciência da Computação · Sprint 0
 
 ---
 
-## 2. Problema abordado (alterar)
+## 2. Problema abordado
 
-A Motiva é a maior empresa de infraestrutura de mobilidade do Brasil, com mais de 5 mil km de rodovias concedidas e cerca de 2 milhões de veículos pedagiados por dia. Toda a arrecadação, o monitoramento e a segurança viária dependem de ativos eletroeletrônicos instalados em campo, expostos a poeira, fuligem, chuva, insetos, vibração e variação térmica. Segundo o briefing da Motiva, a detecção de falha depende muito da percepção humana no CCO, ou seja, é reativa, e o plano de manutenção é majoritariamente estático (por calendário). O histórico de falhas do FSM existe, mas é pouco explorado.
+A Motiva opera mais de 5 mil km de rodovias, com cerca de 2 milhões de veículos pedagiados por dia, e depende de ativos eletroeletrônicos expostos a chuva, poeira e vibração. Segundo o briefing, a detecção de falha é reativa, baseada na percepção do operador do CCO, e o histórico de falhas do FSM é pouco explorado.
 
-O resultado é um volume de alarmes maior do que o operador consegue investigar um a um, e uma parte deles não é falha de ativo. O Tema 2.1 do briefing descreve o caso mais claro: câmeras de CFTV geram **falso positivo** por glare solar, chuva e neblina. Sem triagem, o risco é de dois tipos, nas palavras da persona: **alarme falso gera deslocamento caro; alarme ignorado gera risco viário.**
+O resultado é que o operador recebe mais alarmes do que consegue investigar, e parte deles não é falha. O caso mais claro é o Tema 2.1: câmeras de CFTV geram **falso positivo** por glare solar, chuva e neblina. **Alarme falso gera deslocamento caro; alarme ignorado gera risco viário.**
 
-O EngMan Copilot ataca essa dor: dado o conjunto de alarmes e ocorrências do dia, ele separa o que é de fato falha de ativo do que é condição ambiental, ordena os atendimentos por prioridade e propõe a descrição da ordem de serviço.
+**Objetivo geral:** apoiar o operador do CCO e o coordenador de manutenção a triar os alarmes e ocorrências do dia, sem inventar dados.
+
+**Objetivos específicos:**
+1. Classificar cada alarme em real, ambiental (chuva, neblina, glare solar) ou indeterminado, citando a fonte.
+2. Priorizar a fila do dia por criticidade e histórico de falhas.
+3. Propor a descrição da ordem de serviço e indicar o procedimento aplicável.
+4. Admitir quando não há dado suficiente e recusar o que está fora do escopo.
 
 ---
 
