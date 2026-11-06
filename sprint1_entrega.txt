@@ -1,0 +1,13 @@
+CHALLENGE SPRINT 01 - ENGMAN COPILOT (FIAP x MOTIVA)
+
+Turma: 1CCPS
+Recorte escolhido: B - Operacao e Priorizacao de Campo
+
+Integrantes:
+Thiago Nascimento de Sa - RM 575074 - 1CCPS
+Lucca Vitor Fustinoni Camargo - RM 575383 - 1CCPS
+Erick Vieiro Martins - RM 575683 - 1CCPS
+Miguel Souza Nunes - RM 576617 - 1CCPS
+
+Repositorio: https://github.com/Th1agoLeal/Challenge-Sprint---EngMan-Copilot
+Fluxograma: https://github.com/Th1agoLeal/Challenge-Sprint---EngMan-Copilot/blob/main/docs/arquitetura.png
