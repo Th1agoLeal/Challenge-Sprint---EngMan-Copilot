@@ -79,9 +79,4 @@ Ele **nunca**:
 
 **Teste:** pelo menos 2 casos de `risco_operacional` no eval set, ambos com `deve_recusar: true`.
 
-## 5. Pontos a confirmar com o grupo
-
-1. **Imagens de câmeras:** a proposta acima é que não entram na base, só descrição textual. Confirmar.
-2. **Embeddings:** `nomic-embed-text` via Ollama **Cloud** envia texto a um servidor externo; Sentence Transformers (ou Ollama local) mantém tudo local. A escolha afeta R06 e R07.
-3. **Dependências de outras pessoas:** a coluna "Onde aparece" só vale se o system prompt, o eval set e o `inventario.md` contiverem os itens citados (regras, casos `risco_operacional` e `jailbreak`, política de histórico).
-4. **"Sensores ópticos":** confirmar a qual ativo da tabela do enunciado correspondem, para o escopo e o catálogo baterem.
+##
