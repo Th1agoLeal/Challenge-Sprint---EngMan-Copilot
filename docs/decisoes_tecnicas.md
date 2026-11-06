@@ -92,7 +92,6 @@ Nenhum `.py`, notebook, chave de API ou `.env` com valores reais entra no reposi
 1. Testar a qualidade do Qwen 2.5 7B em pt-BR com o eval set (Aulas 09–14).
 2. Medir memória e velocidade em hardware real e registrar o `num_ctx` configurado.
 3. Avaliar a qualidade da recuperação vetorial (modelo de embeddings, tamanho do chunk, `top-k`).
-4. Confirmar com o grupo as escolhas da seção 4.
 
 ## 8. Fontes
 
