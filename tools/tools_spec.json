@@ -1,0 +1,220 @@
+{
+  "projeto": "EngMan Copilot",
+  "versao": "sprint1",
+  "recorte": "B",
+  "status_dos_dados": "Todas as tools operam sobre dados SIMULADOS. Nenhum dado real da Motiva.",
+  "padrao_de_tag": "^(CFTV|SAT|CBX|SCA)-R01-K[0-9]{3}-[0-9]{2}$",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "consultar_ativo",
+        "description": "Retorna a ficha cadastral de UM ativo identificado pela TAG: tipo, fabricante, modelo, km, trecho, data de instalação, vida útil, criticidade (baixa, media ou alta) e a estação meteorológica (SCA) do trecho. Use sempre que precisar saber o que o ativo é, onde fica ou qual a criticidade dele, por exemplo antes de priorizar um alarme ou redigir uma OS. Não use para listar falhas passadas (use consultar_historico_falhas) nem para buscar procedimentos (use consultar_procedimento). Nunca chame com uma TAG que o usuário não informou ou que você deduziu: se a TAG não foi informada, peça ao usuário. Se o ativo não existir, a tool devolve o erro ATIVO_NAO_ENCONTRADO: nesse caso informe que a TAG não consta no catálogo, não invente dados e peça para o usuário conferir a TAG.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "tag": {
+              "type": "string",
+              "pattern": "^(CFTV|SAT|CBX|SCA)-R01-K[0-9]{3}-[0-9]{2}$",
+              "description": "TAG completa do ativo, em maiúsculas, no formato TIPO-RODOVIA-KMXXX-NN. TIPO é CFTV (câmera), SAT (sensor de tráfego), CBX (telefone SOS) ou SCA (estação meteorológica). Exemplo: CFTV-R01-K412-01."
+            }
+          },
+          "required": ["tag"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "consultar_historico_falhas",
+        "description": "Retorna as falhas passadas de UM ativo identificado pela TAG, dentro de uma janela retroativa em meses: data, sintoma, causa identificada, tempo de reparo, peça trocada, reincidência, condição ambiental no momento e classificação (real ou ambiental). Use quando o usuário perguntar se o ativo já teve o problema, se há reincidência ou se um alarme parece falso positivo por chuva, neblina ou glare. Não use para dados cadastrais (use consultar_ativo). Se o ativo existe mas não teve falhas na janela, a tool devolve sucesso com lista vazia (total igual a 0): diga que não há registro no período e não suponha causa. Se a TAG não existir, devolve ATIVO_NAO_ENCONTRADO: diga que a TAG não consta no catálogo e não invente histórico. Se a janela for inválida, devolve JANELA_INVALIDA: corrija o valor para 1 a 60 e tente de novo uma vez.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "tag": {
+              "type": "string",
+              "pattern": "^(CFTV|SAT|CBX|SCA)-R01-K[0-9]{3}-[0-9]{2}$",
+              "description": "TAG completa do ativo, em maiúsculas. Exemplo: CFTV-R01-K412-01."
+            },
+            "janela_meses": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 60,
+              "default": 12,
+              "description": "Quantos meses para trás consultar, contados a partir de hoje. Padrão 12. Use 3 ou 6 para olhar só o comportamento recente e 24 ou mais para reincidência de longo prazo."
+            },
+            "tipo_falha": {
+              "type": "string",
+              "enum": [
+                "sem_imagem",
+                "lente_obstruida",
+                "desfoque",
+                "perda_comunicacao",
+                "leitura_inconsistente",
+                "leitura_fora_faixa",
+                "descalibracao",
+                "botao_sem_resposta",
+                "audio_falho",
+                "bateria_backup",
+                "geolocalizacao",
+                "outro"
+              ],
+              "description": "Filtro opcional pela natureza da falha. Omita para trazer todas as falhas do ativo. Use apenas valores desta lista: sem_imagem, lente_obstruida e desfoque valem para CFTV; leitura_inconsistente e descalibracao para SAT e SCA; leitura_fora_faixa para SCA; botao_sem_resposta, audio_falho, bateria_backup e geolocalizacao para CBX; perda_comunicacao vale para todos os tipos."
+            }
+          },
+          "required": ["tag"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "abrir_ordem_servico",
+        "description": "Abre uma ordem de serviço SIMULADA para um ativo e devolve o número da OS e o status. É uma ação que registra algo: use SOMENTE depois que o usuário (operador do CCO ou coordenador de manutenção) confirmou explicitamente a TAG, o tipo de intervenção, a prioridade e a janela de atendimento. Nunca abra OS por iniciativa própria, nunca invente prioridade ou janela, e nunca use esta tool para apenas redigir ou mostrar um rascunho de OS (nesse caso escreva o texto na resposta). A OS é uma proposta registrada e não libera, bloqueia nem intervém fisicamente em equipamento. Se a TAG não existir, devolve ATIVO_NAO_ENCONTRADO: informe que a OS não foi aberta. Se faltar campo ou algum valor for inválido, devolve DADOS_INVALIDOS com o campo problemático: peça o dado ao usuário. Em caso de TIMEOUT ou SERVICO_INDISPONIVEL, NÃO tente de novo sozinho, porque a OS pode ter sido criada e a nova tentativa duplicaria o registro: informe ao usuário que não foi possível confirmar a abertura e peça para verificar no sistema de OS antes de repetir.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "tag": {
+              "type": "string",
+              "pattern": "^(CFTV|SAT|CBX|SCA)-R01-K[0-9]{3}-[0-9]{2}$",
+              "description": "TAG completa do ativo que receberá a intervenção. Exemplo: CBX-R01-K401-01."
+            },
+            "tipo_intervencao": {
+              "type": "string",
+              "enum": ["corretiva", "preventiva", "inspecao", "cbm"],
+              "description": "Tipo da intervenção. corretiva: repara falha já confirmada. preventiva: tarefa programada do plano de manutenção. inspecao: verificação em campo para confirmar ou descartar uma suspeita (indicada quando a classificação do alarme é indeterminado). cbm: manutenção orientada por condição do ativo."
+            },
+            "prioridade": {
+              "type": "string",
+              "enum": ["baixa", "media", "alta", "critica"],
+              "description": "Prioridade do atendimento, definida pela matriz de criticidade e pelas regras de triagem (criticidade x segurança viária x arrecadação). Use o valor que o usuário confirmou."
+            },
+            "descricao": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 500,
+              "description": "Texto objetivo da OS: sintoma observado, classificação do alarme (real, ambiental ou indeterminado) e ação solicitada. Sem dados pessoais, sem placas de veículos, sem nomes de empregados. Máximo de 500 caracteres."
+            },
+            "janela_inicio": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Início da janela de atendimento em ISO 8601 com fuso horário. Exemplo: 2026-11-06T08:00:00-03:00."
+            },
+            "janela_fim": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Fim da janela de atendimento em ISO 8601 com fuso horário. Deve ser posterior a janela_inicio. Exemplo: 2026-11-06T12:00:00-03:00."
+            }
+          },
+          "required": ["tag", "tipo_intervencao", "prioridade", "descricao", "janela_inicio", "janela_fim"],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "consultar_procedimento",
+        "description": "Retorna o passo a passo do POP (procedimento operacional padrão) aplicável a um tipo de ativo e a um tipo de intervenção, incluindo os pré-requisitos de segurança (EPI, desligamento seguro, sinalização de via). Use quando o usuário perguntar como executar uma inspeção, limpeza, teste ou correção, ou para indicar na OS qual POP o técnico deve seguir. Não use para saber se o ativo falhou antes (use consultar_historico_falhas). Responda sempre apresentando os pré-requisitos de segurança ANTES dos passos e cite o id do POP. Se não houver POP para a combinação pedida, a tool devolve PROCEDIMENTO_NAO_ENCONTRADO: diga que não há POP cadastrado para essa combinação, não invente passos e encaminhe para a Engenharia de Manutenção. Em caso de TIMEOUT, tente uma única vez de novo; se falhar, informe a indisponibilidade e não improvise o procedimento.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "tipo_ativo": {
+              "type": "string",
+              "enum": ["cftv", "sat", "cbx", "sca"],
+              "description": "Tipo do ativo, em minúsculas. cftv: câmera. sat: sensor de tráfego. cbx: telefone SOS (Callbox). sca: estação meteorológica. Corresponde ao prefixo da TAG (CFTV-..., SAT-..., CBX-..., SCA-...)."
+            },
+            "tipo_intervencao": {
+              "type": "string",
+              "enum": ["corretiva", "preventiva", "inspecao", "cbm"],
+              "description": "Tipo da intervenção para a qual o procedimento é necessário: corretiva, preventiva, inspecao ou cbm."
+            }
+          },
+          "required": ["tipo_ativo", "tipo_intervencao"],
+          "additionalProperties": false
+        }
+      }
+    }
+  ],
+  "contrato_de_retorno": {
+    "descricao": "Formato único de resposta de todas as tools. O modelo deve ler o campo status antes de usar qualquer dado.",
+    "sucesso": {
+      "status": "ok",
+      "dados": "objeto ou lista com o resultado. Lista vazia é sucesso, não erro."
+    },
+    "erro": {
+      "status": "erro",
+      "codigo": "um dos códigos da tabela abaixo",
+      "mensagem": "texto curto explicando o problema",
+      "tentar_novamente": "true ou false"
+    },
+    "exemplo_ok_consultar_ativo": {
+      "status": "ok",
+      "dados": {
+        "tag": "CFTV-R01-K412-01",
+        "tipo_ativo": "cftv",
+        "fabricante": "VisionTec",
+        "modelo": "PTZ-200",
+        "km": 412,
+        "trecho": "C",
+        "instalacao": "2021-03-15",
+        "vida_util_anos": 10,
+        "criticidade": "alta",
+        "estacao_sca_do_trecho": "SCA-R01-K416-01"
+      }
+    },
+    "exemplo_erro_ativo_nao_encontrado": {
+      "status": "erro",
+      "codigo": "ATIVO_NAO_ENCONTRADO",
+      "mensagem": "A TAG CFTV-R01-K999-01 não consta no catálogo de ativos.",
+      "tentar_novamente": false
+    }
+  },
+  "comportamento_em_falha": [
+    {
+      "codigo": "ATIVO_NAO_ENCONTRADO",
+      "tools": ["consultar_ativo", "consultar_historico_falhas", "abrir_ordem_servico"],
+      "quando": "A TAG tem formato válido mas não existe no catálogo.",
+      "o_assistente_deve": "Dizer que a TAG não consta no catálogo, pedir ao usuário que confira a TAG e NÃO inventar ficha, histórico nem OS. Frase sugerida: 'Não encontrei a TAG informada no catálogo. Confira a TAG ou consulte a Engenharia de Manutenção.'"
+    },
+    {
+      "codigo": "TAG_INVALIDA",
+      "tools": ["consultar_ativo", "consultar_historico_falhas", "abrir_ordem_servico"],
+      "quando": "A TAG não segue o padrão TIPO-R01-KXXX-NN.",
+      "o_assistente_deve": "Pedir a TAG completa ao usuário. Não tentar adivinhar a TAG a partir de um km solto."
+    },
+    {
+      "codigo": "JANELA_INVALIDA",
+      "tools": ["consultar_historico_falhas"],
+      "quando": "janela_meses está fora do intervalo de 1 a 60.",
+      "o_assistente_deve": "Corrigir o valor para dentro do intervalo e chamar de novo uma única vez."
+    },
+    {
+      "codigo": "DADOS_INVALIDOS",
+      "tools": ["abrir_ordem_servico"],
+      "quando": "Campo obrigatório ausente, valor fora do enum, descrição curta ou longa demais, ou janela_fim anterior a janela_inicio.",
+      "o_assistente_deve": "Informar qual campo está inválido, pedir o dado ao usuário e NÃO preencher por conta própria."
+    },
+    {
+      "codigo": "PROCEDIMENTO_NAO_ENCONTRADO",
+      "tools": ["consultar_procedimento"],
+      "quando": "Não há POP cadastrado para a combinação de tipo_ativo e tipo_intervencao.",
+      "o_assistente_deve": "Dizer que não há POP cadastrado, não improvisar passos e encaminhar para a Engenharia de Manutenção. Nunca orientar intervenção elétrica ou em altura sem procedimento (NR-10 e NR-35)."
+    },
+    {
+      "codigo": "TIMEOUT",
+      "tools": ["consultar_ativo", "consultar_historico_falhas", "abrir_ordem_servico", "consultar_procedimento"],
+      "quando": "A tool não respondeu dentro do tempo limite de 10 segundos.",
+      "o_assistente_deve": "Nas tools de consulta, tentar de novo uma vez; se falhar, dizer que o sistema não respondeu e que a informação não pôde ser confirmada, sem preencher com suposição. Em abrir_ordem_servico, NÃO repetir: avisar que a abertura não foi confirmada e pedir que o usuário verifique no sistema de OS antes de qualquer nova tentativa."
+    },
+    {
+      "codigo": "SERVICO_INDISPONIVEL",
+      "tools": ["consultar_ativo", "consultar_historico_falhas", "abrir_ordem_servico", "consultar_procedimento"],
+      "quando": "A fonte de dados está fora do ar.",
+      "o_assistente_deve": "Mesmo tratamento do TIMEOUT. Informar a indisponibilidade e sugerir contato com a Engenharia de Manutenção."
+    }
+  ],
+  "regra_geral_de_falha": "Quando qualquer tool falhar, o assistente nunca preenche a lacuna com dado inventado. Ele informa o que não conseguiu obter, indica o próximo passo (conferir a TAG, aguardar, consultar a Engenharia de Manutenção) e rotula como não confirmado qualquer conclusão que dependa do dado ausente."
+}
