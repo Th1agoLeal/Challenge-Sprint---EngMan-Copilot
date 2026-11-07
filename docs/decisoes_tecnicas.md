@@ -57,8 +57,6 @@ A solução precisa ter um **caminho de execução 100% gratuito**. Nenhuma etap
 
 ## 4. Demais camadas da stack
 
-Esta seção não consta nas tabelas originais. Marque cada item como aceito ou ajuste.
-
 | Camada | Proposta | Justificativa | Alternativa |
 |--------|----------|---------------|-------------|
 | Orquestração | Chamada direta via SDK (Ollama) | Menos dependências e alinhada às funções simples do Módulo 3 (`chamar_llm()`, histórico, `montar_prompt()`) | LangChain (LCEL), caso a orquestração cresça |
