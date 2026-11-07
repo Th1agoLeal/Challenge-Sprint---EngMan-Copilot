@@ -4,7 +4,7 @@ Challenge Sprint FIAP × Motiva Rodovias · Ciência da Computação · Sprint 0
 
 ---
 
-## 1. Nome do projeto e integrantes (alterar)
+## 1. Nome do projeto e integrantes 
 
 **Assistente:** EngMan Copilot
 **Recorte:** B — Operação e Priorização de Campo
@@ -35,7 +35,7 @@ O resultado é que o operador recebe mais alarmes do que consegue investigar, e 
 
 ---
 
-## 3. Recorte e persona (alterar)
+## 3. Recorte e persona 
 
 **Recorte B — Operação e Priorização de Campo.** O grupo escolheu o B porque a dor dele aparece diretamente no briefing: reduz o deslocamento de campo desnecessário (Tema 2) e trata os falsos positivos de glare, chuva e neblina (Tema 2.1). Além disso, o recorte tem um critério de sucesso objetivo e testável: a classificação de cada alarme pode ser conferida caso a caso no eval set.
 
@@ -43,7 +43,7 @@ O resultado é que o operador recebe mais alarmes do que consegue investigar, e 
 
 **Persona secundária: coordenador de manutenção.** Usa a mesma triagem para decidir quais ocorrências viram atividade de campo e em que ordem.
 
-**Ativos considerados** (subconjunto do parque descrito no briefing):
+**Ativos considerados**
 
 | Ativo | O que faz | Falhas típicas que o assistente ajuda a tratar | Condição ambiental que simula falha |
 | --- | --- | --- | --- |
@@ -67,7 +67,7 @@ O resultado é que o operador recebe mais alarmes do que consegue investigar, e 
 - Explicar conceitos de manutenção e operação dos ativos cobertos.
 - Informar o que fazer quando o dado não existe: dizer que não sabe e encaminhar ao responsável.
 
-**O assistente recusa** (com a frase padrão de recusa do system prompt): (alterar)
+**O assistente recusa:**
 
 - Emitir laudo técnico, ART ou parecer de engenharia com validade legal.
 - Liberar, bloquear ou intervir fisicamente em equipamento.
@@ -82,7 +82,7 @@ O resultado é que o operador recebe mais alarmes do que consegue investigar, e 
 
 ## 5. Arquitetura da solução
 
-Fluxograma: [`docs/arquitetura.png`](docs/arquitetura.png) *(em breve, entrega da Pessoa 4)*
+Fluxograma: [`docs/arquitetura.png`](docs/arquitetura.png) 
 
 Fluxo em 8 blocos, do alarme à resposta:
 
@@ -94,8 +94,6 @@ Fluxo em 8 blocos, do alarme à resposta:
 6. **Execução da tool:** a função devolve o resultado simulado, que volta ao contexto para uma nova chamada.
 7. **Guardrail de saída:** verifica se a resposta está no escopo, cita a fonte, não inventou TAG ou métrica e marca hipótese como hipótese.
 8. **Resposta e histórico:** entrega no formato definido (classificação, prioridade, ação e rascunho de OS) e grava o turno no histórico, com política de limite de contexto.
-
-*A explicação detalhada de cada bloco entra aqui quando o fluxograma for finalizado.*
 
 ---
 
@@ -136,24 +134,27 @@ Comparação completa em [`docs/decisoes_tecnicas.md`](docs/decisoes_tecnicas.md
 
 ## 7. Base de conhecimento
 
-Inventário completo: [`data/knowledge_base/inventario.md`](data/knowledge_base/inventario.md) *(em breve, entrega da Pessoa 3)*.
+Inventário completo: [`data/knowledge_base/inventario.md`](data/knowledge_base/inventario.md)
 
-Documentos previstos (mínimo de 8):
+13 documentos (mínimo exigido: 8):
 
-| Documento | Origem |
-| --- | --- |
-| Catálogo de ativos | simulado |
-| Plano de manutenção preventiva | simulado |
-| Histórico de falhas do FSM | simulado |
-| Procedimentos operacionais (POPs) | simulado |
-| Fichas técnicas dos equipamentos | real + simulado |
-| Matriz de criticidade | simulado |
-| Glossário de siglas | real |
-| Normas e requisitos de segurança (NR-10, NR-35) | real (resumo) |
-| Documentos do briefing Motiva | real |
-| Boletins de ocorrência / laudos de campo (incluindo condição ambiental) | simulado |
+| ID | Documento | Origem |
+| --- | --- | --- |
+| D01 | Catálogo de ativos | simulado |
+| D02 | Plano de manutenção preventiva | simulado |
+| D03 | Histórico de falhas do FSM | simulado |
+| D04 | POPs (procedimentos operacionais) | simulado |
+| D05 | Fichas técnicas dos 4 tipos de ativo | real + simulado |
+| D06 | Matriz de criticidade | simulado |
+| D07 | Regras de triagem de alarmes | simulado |
+| D08 | Registro de alarmes do CCO (lotes de exemplo) | simulado |
+| D09 | Glossário de siglas | real |
+| D10 | Normas e requisitos de segurança | real (resumo) |
+| D11 | Documentos do briefing Motiva | real |
+| D12 | Boletins de ocorrência e laudos de campo | simulado |
+| D13 | Leituras das estações meteorológicas (SCA) | simulado |
 
-**Uso no RAG:** os documentos são divididos em trechos (chunks) e guardados com metadados para busca filtrada (TAG, tipo de ativo, data, tipo de documento). O tamanho do chunk e a justificativa pela janela de contexto serão definidos pela Pessoa 3.
+**Uso no RAG:** os documentos são divididos em trechos de 300 a 500 tokens, com sobreposição de 10 a 15%, para que regras e fichas não sejam cortadas ao meio. Cada trecho guarda metadados para busca filtrada (TAG, tipo de ativo, data, tipo de documento). O orçamento estimado da janela de trabalho (8.000 tokens) está na seção 6.2 do inventário.
 
 **O que não entra na base:** dado pessoal de empregado, imagem de ocupante de veículo, placa não anonimizada e dado contratual sensível.
 
@@ -161,7 +162,7 @@ Documentos previstos (mínimo de 8):
 
 ## 8. System prompt
 
-Arquivo: [`prompts/system_prompt.md`](prompts/system_prompt.md) *(em breve, entrega da Pessoa 2)*.
+Arquivo: [`prompts/system_prompt.md`](prompts/system_prompt.md).
 
 Estruturado em 7 blocos (PAPEL, OBJETIVO, ESCOPO, REGRAS, FORMATO, TOM, BORDA), com comentário em cada bloco. A lista de recusas do escopo (seção 4) aparece como regras numeradas no prompt, e o formato de saída segue a classificação real / ambiental / indeterminado.
 
@@ -169,11 +170,11 @@ Estruturado em 7 blocos (PAPEL, OBJETIVO, ESCOPO, REGRAS, FORMATO, TOM, BORDA), 
 
 ## 9. Eval set
 
-Arquivo: [`evals/sprint1_eval_set.json`](evals/sprint1_eval_set.json) *(em breve, entrega da Pessoa 2)*.
+Arquivo: [`evals/sprint1_eval_set.json`](evals/sprint1_eval_set.json)
 
-Mínimo de 10 casos, cobrindo as 8 categorias:
+O eval tem 10 casos, cobrindo as 8 categorias:
 
-| Categoria | Mínimo | O que testa |
+| Categoria | Casos | O que testa |
 | --- | --- | --- |
 | factual | 2 | Recupera e cita corretamente um dado da base |
 | instrucional | 2 | Procedimento ou geração de texto (ex.: descrição de OS) |
@@ -188,7 +189,7 @@ Mínimo de 10 casos, cobrindo as 8 categorias:
 
 ## 10. Tools especificadas
 
-Contrato em JSON Schema: [`tools/tools_spec.json`](tools/tools_spec.json) *(em breve, entrega da Pessoa 3)*.
+Contrato em JSON Schema: [`tools/tools_spec.json`](tools/tools_spec.json).
 
 | Tool | O que faz | Parâmetros |
 | --- | --- | --- |
@@ -201,7 +202,7 @@ Contrato em JSON Schema: [`tools/tools_spec.json`](tools/tools_spec.json) *(em b
 
 ## 11. Riscos e mitigações
 
-Matriz completa: [`docs/riscos_lgpd.md`](docs/riscos_lgpd.md) *(em breve, entrega da Pessoa 4)*.
+Matriz completa: [`docs/riscos_lgpd.md`](docs/riscos_lgpd.md).
 
 | Risco | Impacto | Mitigação | Onde aparece |
 | --- | --- | --- | --- |
@@ -224,9 +225,8 @@ Matriz completa: [`docs/riscos_lgpd.md`](docs/riscos_lgpd.md) *(em breve, entreg
 
 ---
 
-## 13. Referências (alterar)
+## 13. Referências
 
 - Briefing Inovação Aberta FIAP — EngMan Motiva (16/09/2026).
-- Documento oficial do Challenge Sprint — EngMan Copilot, Prof. Jorge Luiz Gomes, Prompt Engineering & Artificial Intelligence, FIAP.
 - Materiais da disciplina, Módulos 1 e 2.
 - NR-10 (segurança em instalações elétricas) e NR-35 (trabalho em altura).
