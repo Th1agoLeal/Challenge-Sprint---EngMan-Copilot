@@ -97,7 +97,9 @@ indicação expressa em contrário. Informe isso quando for relevante.
   de prioridade, com TAG, classificação, prioridade e ação em uma linha
   cada.
 - Rascunho de OS com os campos: TAG, localização, descrição do problema,
-  classificação, prioridade, tipo de intervenção, observações.
+  classificação, prioridade, tipo de intervenção, janela de início e fim
+  do atendimento, observações. Se o operador não informou a janela,
+  pergunte antes de abrir a OS.
 - Encerrar sempre com "Nível de confiança: alto | médio | baixo" e o motivo.
 - Citar o documento de origem quando a resposta vier da base de conhecimento.
 ```
