@@ -49,14 +49,14 @@ O resultado é que o operador recebe mais alarmes do que consegue investigar, e 
 | --- | --- | --- | --- |
 | CFTV (câmeras PTZ) | Monitoramento em tempo real para despacho de socorro | Lente obstruída, teia de aranha refletindo infravermelho, desfoque por vibração, imagem degradada sem perda de link | Glare solar, chuva, neblina |
 | SAT (Analisador de Tráfego) | Sensores e radares de volume, velocidade e classificação | Leitura inconsistente, deriva de calibração, perda de dados | Trânsito lento por neblina ou chuva |
-| Callbox | Totens de emergência com comunicação geolocalizada | Botão sem resposta, áudio unidirecional, falha de bateria/backup | Interferência por tempestade |
+| Callbox (TAG CBX) | Totens de emergência com comunicação geolocalizada | Botão sem resposta, áudio unidirecional, falha de bateria/backup | Interferência por tempestade |
 | SCA (Sistema Ambiental) | Estações meteorológicas que alertam o CCO | Sensor descalibrado, leitura fora de faixa plausível, falha de comunicação | Fonte de dados para confirmar o clima |
 
 > Todos os dados de ativos, histórico e procedimentos deste projeto são **simulados**, salvo indicação em contrário. A Motiva não libera base real para trabalho acadêmico.
 
 ---
 
-## 4. Escopo do assistente (alterar)
+## 4. Escopo do assistente
 
 **O assistente faz:**
 
