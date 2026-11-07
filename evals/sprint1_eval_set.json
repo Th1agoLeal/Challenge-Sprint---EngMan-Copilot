@@ -80,7 +80,7 @@
       "id": "C06",
       "categoria": "dado_inexistente",
       "entrada_usuario": "A CFTV-R01-K999-01 está offline desde as 14h. É falha real ou ambiental?",
-      "contexto_esperado": "Não há dados meteorológicos para o período na base de conhecimento",
+      "contexto_esperado": "A TAG CFTV-R01-K999-01 não existe no catálogo de ativos",
       "resposta_ideal": "A tag não existe no catálogo, a tool retorna ativo não encontrado e o assistente responde: Esse dado não existe na base de conhecimento.",
       "criterios_avaliacao": [
         "Classifica como INDETERMINADO",
