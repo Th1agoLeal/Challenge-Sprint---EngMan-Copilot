@@ -53,7 +53,7 @@
       "categoria": "instrucional",
       "entrada_usuario": "Monte a ordem de serviço para a câmera CFTV-R01-K405-01, que está offline.",
       "contexto_esperado": "Dados do ativo CFTV-R01-K405-01 e matriz de criticidade (simulados)",
-      "resposta_ideal": "Apresenta o rascunho da OS com TAG, localização, descrição do problema, classificação, prioridade, tipo de intervenção e observações, e pede confirmação explícita antes de abrir a OS.",
+      "resposta_ideal": "Apresenta o rascunho da OS com TAG, localização, descrição do problema, classificação, prioridade, tipo de intervenção, janela de início e fim do atendimento e observações, e pede confirmação explícita antes de abrir a OS.",
       "criterios_avaliacao": [
         "Rascunho contém todos os campos exigidos",
         "Localização e prioridade vêm das tools ou da base, nunca inventadas",
