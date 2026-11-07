@@ -55,7 +55,7 @@ A solução precisa ter um **caminho de execução 100% gratuito**. Nenhuma etap
 
 **Trade-off aceito.** Priorizamos simplicidade de implementação e filtros por metadados integrados. Aceitamos abrir mão do controle fino sobre índices e do desempenho em grande escala do FAISS, o que não pesa em uma base pequena e simulada.
 
-## 4. Demais camadas da stack (propostas, a confirmar com o grupo)
+## 4. Demais camadas da stack
 
 Esta seção não consta nas tabelas originais. Marque cada item como aceito ou ajuste.
 
