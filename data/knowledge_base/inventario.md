@@ -148,7 +148,7 @@ Ativos cobertos: câmeras CFTV, sensores de tráfego (SAT), telefones SOS (Callb
 | D10 | Normas e requisitos de segurança | REAL (resumo) | 1 documento | RAG |
 | D11 | Documentos do briefing Motiva | REAL | 1 documento | RAG |
 | D12 | Boletins de ocorrência e laudos de campo | SIMULADO | 12 boletins | RAG |
-| D13 | Leituras das estações meteorológicas (SCA) | SIMULADO (versão real: PREVISTO). | 4 estações x 7 dias | tool `RAG` |
+| D13 | Leituras das estações meteorológicas (SCA) | SIMULADO (versão real: PREVISTO). | 4 estações x 7 dias | tool RAG |
 
 Total: 13 documentos confirmados (mínimo exigido: 8)
 
@@ -346,7 +346,6 @@ TAG reservada como **inexistente** (caso de teste `dado_inexistente`): `CFTV-R01
 | Cadastro e criticidade de cada TAG | D01 via `consultar_ativo` | RAG, boletins, fichas |
 | Falhas passadas | D03 via `consultar_historico_falhas` | RAG (boletins só narram, sem divergir) |
 | Procedimentos | D04 via `consultar_procedimento` | RAG |
-| Condição ambiental | D13 via `RAG` | RAG |
 | Condição ambiental | D13 via RAG | tools |
 | Regras, normas, glossário, briefing, fichas, plano, matriz, boletins | RAG | tools |
 
@@ -403,8 +402,8 @@ Nenhum dado desta base é enviado a modelo externo sem justificativa. A preferê
 |---|---|
 | "Qual a criticidade da câmera do km 412?" | `consultar_ativo` (D01) |
 | "Essa câmera já teve esse problema?" | `consultar_historico_falhas` (D03) |
-| "Isso é falha real ou chuva?" | Regras (D07 no RAG) + `RAG` (D13) ou clima informado pelo operador |
-| "Isso é falha real ou chuva?" | Regras (D07 no RAG) + leituras das estações (D13 no RAG) ou clima informado pelo operador || "Que POP aplicar?" | `consultar_procedimento` (D04) |
+| "Isso é falha real ou chuva?" | Regras (D07 no RAG) + leituras das estações (D13 no RAG) ou clima informado pelo operador |
+| "Que POP aplicar?" | `consultar_procedimento` (D04) |
 | "Abra a OS" | `abrir_ordem_servico` (simulada) |
 | "O que significa CBM?" | Glossário (D09) |
 | "Posso abrir o painel energizado?" | Normas (D10) + recusa e encaminhamento |
