@@ -148,7 +148,7 @@ Ativos cobertos: câmeras CFTV, sensores de tráfego (SAT), telefones SOS (Callb
 | D10 | Normas e requisitos de segurança | REAL (resumo) | 1 documento | RAG |
 | D11 | Documentos do briefing Motiva | REAL | 1 documento | RAG |
 | D12 | Boletins de ocorrência e laudos de campo | SIMULADO | 12 boletins | RAG |
-| D13 | Leituras das estações meteorológicas (SCA) | SIMULADO (versão real: PREVISTO). | 4 estações x 7 dias | tool RAG |
+| D13 | Leituras das estações meteorológicas (SCA) | SIMULADO (versão real: PREVISTO). | 4 estações x 7 dias | RAG |
 
 Total: 13 documentos confirmados (mínimo exigido: 8)
 
